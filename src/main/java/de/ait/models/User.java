@@ -7,14 +7,14 @@ public class User {
     private String lastName;
     private LocalDate dateOfBirth;
     private String phoneNumber;
-    private int seasonTicket_id;
+    private String userId;
 
-    public User(String firstName, String lastName, LocalDate dateOfBirth, String phoneNumber, int seasonTicket_id) {
+    public User(String firstName, String lastName, LocalDate dateOfBirth, String phoneNumber, String userId) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
         this.phoneNumber = phoneNumber;
-        this.seasonTicket_id = seasonTicket_id;
+        this.userId=userId;
     }
 
     public String getFirstName() {
@@ -49,12 +49,12 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
-    public int getSeasonTicket_id() {
-        return seasonTicket_id;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setSeasonTicket_id(int seasonTicket_id) {
-        this.seasonTicket_id = seasonTicket_id;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     @Override
@@ -64,7 +64,7 @@ public class User {
                 ", lastName='" + lastName + '\'' +
                 ", dateOfBirth=" + dateOfBirth +
                 ", phoneNumber='" + phoneNumber + '\'' +
-                ", seasonTicket_id=" + seasonTicket_id +
+                ", seasonTicket_id=" + userId +
                 '}';
     }
 }

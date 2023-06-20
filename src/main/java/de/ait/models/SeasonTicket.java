@@ -3,24 +3,24 @@ package de.ait.models;
 import java.time.LocalDate;
 
 public class SeasonTicket  {
-    private TypeOfTicket seasonTicket;
+    private TypeOfTicket typeOfTicket;
     private LocalDate begin;
     private LocalDate end;
-    private int id;
+    private String id;
 
-    public SeasonTicket(TypeOfTicket seasonTicket, LocalDate begin, LocalDate end, int id) {
-        this.seasonTicket = seasonTicket;
+    public SeasonTicket(TypeOfTicket typeOfTicket, LocalDate begin, LocalDate end, String id) {
+        this.typeOfTicket = typeOfTicket;
         this.begin = begin;
         this.end = end;
         this.id = id;
     }
 
-    public TypeOfTicket getSeasonTicket() {
-        return seasonTicket;
+    public TypeOfTicket getTypeOfTicket() {
+        return typeOfTicket;
     }
 
-    public void setSeasonTicket(TypeOfTicket seasonTicket) {
-        this.seasonTicket = seasonTicket;
+    public void setTypeOfTicket(TypeOfTicket typeOfTicket) {
+        this.typeOfTicket = typeOfTicket;
     }
 
     public LocalDate getBegin() {
@@ -39,18 +39,18 @@ public class SeasonTicket  {
         this.end = end;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
     @Override
     public String toString() {
         return "SeasonTicket{" +
-                "seasonTicket=" + seasonTicket +
+                "seasonTicket=" + typeOfTicket +
                 ", begin=" + begin +
                 ", end=" + end +
                 ", numberId=" + id +
