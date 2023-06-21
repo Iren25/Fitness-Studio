@@ -39,7 +39,7 @@ public class UsersRepositoryTextFileImpl implements UsersRepository {
     }
     @Override
     public void save(User user) {
-        try (FileWriter fileWriter = new FileWriter(fileName, true);
+        try (FileWriter fileWriter = new FileWriter("users.txt", true);
              BufferedWriter bufferedWriter = new BufferedWriter(fileWriter)) {
             String line = user.toString();
             bufferedWriter.newLine();
@@ -64,7 +64,7 @@ public class UsersRepositoryTextFileImpl implements UsersRepository {
 
     @Override
     public User findById(String id) {
-        for (User user : users) {
+        for (User user : findAll()) {
             if (id.equals(user.getUserId())) {
                 return user;
             }

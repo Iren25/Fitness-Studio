@@ -3,9 +3,7 @@ package de.ait.repositories;
 import de.ait.models.Contract;
 import de.ait.models.User;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +34,7 @@ public class ContractRepositoryFileImpl implements ContractRepository {
 
     @Override
     public void save(Contract contract) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("contracts.txt", true))) {
             writer.write(contract.getId() + "|" +
                     contract.getDate().toString() + "|" +
                     contract.getTicketId() + "|" +
@@ -55,15 +53,35 @@ public class ContractRepositoryFileImpl implements ContractRepository {
 
         return new Contract(id,date,ticketId,userId);
     }
-
     @Override
     public Contract findById(String id) {
-        for (Contract contract : contracts) {
+        for (Contract contract : findAll()) {
             if (id.equals(contract.getId())) {
                 return contract;
             }
         }
         throw new IllegalArgumentException();
     }
-}
+
+    @Override
+    public List <Contract> findAll() {
+        List<Contract> contractList = new ArrayList<>();
+        try (FileReader fileReader = new FileReader("contracts.txt");
+             BufferedReader bufferedReader = new BufferedReader(fileReader)) {
+
+            String line = bufferedReader.readLine();
+
+            while (line != null) {
+                Contract contract = parseLine(line);
+                contractList.add(contract);
+                line = bufferedReader.readLine();
+            }
+        } catch (IOException e) {
+            System.err.println("Произошла ошибка");
+        }
+
+        return contractList;
+    }
+    }
+
 

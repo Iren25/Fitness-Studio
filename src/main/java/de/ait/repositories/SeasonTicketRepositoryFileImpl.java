@@ -1,12 +1,18 @@
 package de.ait.repositories;
 
 
+import de.ait.models.Contract;
 import de.ait.models.SeasonTicket;
+import de.ait.models.TypeOfTicket;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import javax.swing.*;
+import javax.swing.text.DateFormatter;
+import java.io.*;
+import java.text.DateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class SeasonTicketRepositoryFileImpl implements SeasonTicketRepository {
@@ -28,25 +34,57 @@ public class SeasonTicketRepositoryFileImpl implements SeasonTicketRepository {
 
     @Override
     public void save(SeasonTicket seasonTicket) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("seasonTickets.txt", true))) {
             writer.write(seasonTicket.getId() + "|" +
                     seasonTicket.getBegin().toString() + "|" +
-                    seasonTicket.getEnd() + "|" +
-                    seasonTicket.getTypeOfTicket());
+                    seasonTicket.getEnd().toString() + "|" +
+                    seasonTicket.getTypeOfTicket().toString());
             writer.newLine();
         } catch (IOException e) {
             throw new IllegalStateException("Проблемы с файлом");
         }
     }
+    private static SeasonTicket parseLine(String line) {
+        String[] parsed = line.split("\\|");
+        String id = parsed[0];
+        LocalDate begin = LocalDate.parse(parsed[1]);
+        LocalDate end = LocalDate.parse(parsed[2], DateTimeFormatter.ofPattern("yyyy-mm-dd"));
+        TypeOfTicket typeOfTicket = TypeOfTicket.valueOf(parsed[3]);
+
+
+
+        return new SeasonTicket(typeOfTicket, begin, end, id);
+    }
 
     @Override
     public SeasonTicket findById(String id) {
-        for (SeasonTicket seasonTicket : seasonTicketList) {
+        for (SeasonTicket seasonTicket : findAll()) {
             if (id.equals(seasonTicket.getId())) {
                 return seasonTicket;
             }
         }
         throw new IllegalArgumentException();
     }
+
+    @Override
+    public List<SeasonTicket> findAll() {
+            List<SeasonTicket> seasonTickets = new ArrayList<>();
+            try (FileReader fileReader = new FileReader("seasonTickets.txt");
+                 BufferedReader bufferedReader = new BufferedReader(fileReader)) {
+
+                String line = bufferedReader.readLine();
+
+                while (line != null) {
+                    SeasonTicket seasonTicket = parseLine(line);
+                    seasonTickets.add(seasonTicket);
+                    line = bufferedReader.readLine();
+                }
+            } catch (IOException e) {
+                System.err.println("Произошла ошибка");
+            }
+
+            return seasonTickets;
+    }
+
 
 }

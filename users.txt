@@ -1,4 +1,2 @@
-Marsel|Sidikov|29|1.85
-Maxim|Ivanov|19|1.79
-Ruslan|Kochkin|41|1.83
-Kirill|Petrov|55|1.90
+Ivan|Ivanov|1990-01-15|+87326744531|1
+Petr|Petrov|1992-06-21|+49786565276|2
