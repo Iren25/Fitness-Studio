@@ -6,24 +6,24 @@ import java.time.LocalDate;
 
 public class Contract {
 
-    private String contractId;
+    private String id;
     private LocalDate date;
     private String ticketId;
     private String userId;
 
-    public Contract(String contractId, LocalDate date, String ticketId, String userId) {
-        this.contractId = contractId;
+    public Contract(String id, LocalDate date, String ticketId, String userId) {
+        this.id = id;
         this.date = date;
         this.ticketId = ticketId;
         this.userId = userId;
     }
 
-    public String getContractId() {
-        return contractId;
+    public String getId() {
+        return id;
     }
 
-    public void setContractId(String contractId) {
-        this.contractId = contractId;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public LocalDate getDate() {
@@ -53,7 +53,7 @@ public class Contract {
     @Override
     public String toString() {
         return "Contract{" +
-                "contractId='" + contractId + '\'' +
+                "contractId='" + id + '\'' +
                 ", date=" + date +
                 ", ticketId='" + ticketId + '\'' +
                 ", lastName='" + userId + '\'' +

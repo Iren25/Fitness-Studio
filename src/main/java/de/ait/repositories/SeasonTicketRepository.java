@@ -4,5 +4,4 @@ import de.ait.models.SeasonTicket;
 
 public interface SeasonTicketRepository extends CrudRepository<SeasonTicket>{
 
-    SeasonTicket findTypeOfTicketById(String ticketId);
 }

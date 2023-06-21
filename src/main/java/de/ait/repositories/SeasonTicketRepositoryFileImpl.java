@@ -49,8 +49,4 @@ public class SeasonTicketRepositoryFileImpl implements SeasonTicketRepository {
         throw new IllegalArgumentException();
     }
 
-    @Override
-    public SeasonTicket findTypeOfTicketById(String ticketId) {
-        return null;
-    }
 }
