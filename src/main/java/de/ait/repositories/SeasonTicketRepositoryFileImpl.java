@@ -1,19 +1,13 @@
 package de.ait.repositories;
 
-
-import de.ait.models.Contract;
 import de.ait.models.SeasonTicket;
 import de.ait.models.TypeOfTicket;
-
-import javax.swing.*;
-import javax.swing.text.DateFormatter;
 import java.io.*;
-import java.text.DateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+
 
 public class SeasonTicketRepositoryFileImpl implements SeasonTicketRepository {
     private String fileName;
@@ -47,10 +41,9 @@ public class SeasonTicketRepositoryFileImpl implements SeasonTicketRepository {
     private static SeasonTicket parseLine(String line) {
         String[] parsed = line.split("\\|");
         String id = parsed[0];
-        LocalDate begin = LocalDate.parse(parsed[1]);
-        LocalDate end = LocalDate.parse(parsed[2], DateTimeFormatter.ofPattern("yyyy-mm-dd"));
+        LocalDate begin = LocalDate.parse(parsed[1], DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        LocalDate end = LocalDate.parse(parsed[2], DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         TypeOfTicket typeOfTicket = TypeOfTicket.valueOf(parsed[3]);
-
 
 
         return new SeasonTicket(typeOfTicket, begin, end, id);

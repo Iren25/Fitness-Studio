@@ -35,7 +35,7 @@ public class ContractServiceImpl implements ContractService {
         Contract contract = new Contract(UUID.randomUUID().toString(), LocalDate.now(),
                 seasonTicket.getId(),user.getUserId());
         contractRepository.save(contract);
-        return "Договор №" + contract.getId() + "был заключен с " + user.getFirstName()
-                + " " + user.getLastName() + contract.getDate();
+        return "Договор № " + contract.getId() + " был заключен с " + user.getFirstName()
+                + " " + user.getLastName() + " " + contract.getDate();
     }
 }
