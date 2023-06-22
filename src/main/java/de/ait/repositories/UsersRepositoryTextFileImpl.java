@@ -1,11 +1,14 @@
 package de.ait.repositories;
 
 
+import de.ait.models.SeasonTicket;
 import de.ait.models.User;
 
 import java.io.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class UsersRepositoryTextFileImpl implements UsersRepository {
@@ -18,6 +21,7 @@ public class UsersRepositoryTextFileImpl implements UsersRepository {
         this.fileName = fileName;
         this.users = new ArrayList<>();
     }
+
     @Override
     public List<User> findAll() {
         List<User> users = new ArrayList<>();
@@ -34,13 +38,14 @@ public class UsersRepositoryTextFileImpl implements UsersRepository {
         }
         return users;
     }
+
     @Override
     public void save(User user) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("users.txt", true))) {
             writer.write(user.getFirstName() + "|" +
                     user.getLastName() + "|" +
                     user.getDateOfBirth().toString() + "|" +
-                    user.getPhoneNumber()+ "|" +
+                    user.getPhoneNumber() + "|" +
                     user.getUserId());
             writer.newLine();
         } catch (IOException e) {
@@ -67,6 +72,45 @@ public class UsersRepositoryTextFileImpl implements UsersRepository {
             }
         }
         throw new IllegalArgumentException();
+    }
+
+    public SeasonTicket getSeasonTicketByName(String lastName ,String phoneNumber) {
+        String userId = "";
+        String ticketID = "";
+
+        try (BufferedReader reader = new BufferedReader(new FileReader("users.txt"))) {
+            userId = reader.lines()
+                    .map(line -> line.split("\\|"))
+                    .filter(parsed ->parsed[3].equals(phoneNumber))
+                    .map(parsed-> parsed[4]).findAny().orElse(null);
+        } catch (IOException e) {
+            throw new IllegalStateException("Проблемы с файлом");
+        }
+
+        try (BufferedReader reader = new BufferedReader(new FileReader("contracts.txt"))) {
+            final String id = userId;
+            ticketID = reader.lines()
+                    .map(line -> line.split("\\|"))
+                    .filter(parsed ->parsed[3].equals(id))
+                    .map(parsed-> parsed[2]).findAny().orElse(null);
+        } catch (IOException e) {
+            throw new IllegalStateException("Проблемы с файлом");
+        }
+
+        try (BufferedReader reader = new BufferedReader(new FileReader("seasonTickets.txt"))) {
+            final String id = ticketID;
+            List<String> list = reader.lines()
+            //ticketID = reader.lines()
+                    .map(line -> line.split("\\|"))
+                    .filter(parsed ->parsed[0].equals(id))
+                    .map(parsed-> Arrays.asList(parsed))
+                    .findFirst().orElse(Collections.emptyList());
+                    //.map(parsed-> parsed[3]).findAny().orElse(null);
+        } catch (IOException e) {
+            throw new IllegalStateException("Проблемы с файлом");
+        }
+        return null;
+
     }
 }
 

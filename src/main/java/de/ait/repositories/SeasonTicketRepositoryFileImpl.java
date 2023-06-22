@@ -1,18 +1,11 @@
 package de.ait.repositories;
 
-
-
 import de.ait.models.SeasonTicket;
 import de.ait.models.TypeOfTicket;
-
-
-
 import java.io.*;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-
 import java.util.List;
 
 public class SeasonTicketRepositoryFileImpl implements SeasonTicketRepository {
