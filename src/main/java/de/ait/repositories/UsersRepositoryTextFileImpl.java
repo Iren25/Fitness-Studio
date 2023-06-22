@@ -2,6 +2,7 @@ package de.ait.repositories;
 
 
 import de.ait.models.SeasonTicket;
+import de.ait.models.TypeOfTicket;
 import de.ait.models.User;
 
 import java.io.*;
@@ -74,15 +75,15 @@ public class UsersRepositoryTextFileImpl implements UsersRepository {
         throw new IllegalArgumentException();
     }
 
-    public SeasonTicket getSeasonTicketByName(String lastName ,String phoneNumber) {
+    public SeasonTicket getSeasonTicketByPhone(String phoneNumber) {
         String userId = "";
         String ticketID = "";
 
         try (BufferedReader reader = new BufferedReader(new FileReader("users.txt"))) {
             userId = reader.lines()
                     .map(line -> line.split("\\|"))
-                    .filter(parsed ->parsed[3].equals(phoneNumber))
-                    .map(parsed-> parsed[4]).findAny().orElse(null);
+                    .filter(parsed -> parsed[3].equals(phoneNumber))
+                    .map(parsed -> parsed[4]).findAny().orElse(null);
         } catch (IOException e) {
             throw new IllegalStateException("Проблемы с файлом");
         }
@@ -91,8 +92,8 @@ public class UsersRepositoryTextFileImpl implements UsersRepository {
             final String id = userId;
             ticketID = reader.lines()
                     .map(line -> line.split("\\|"))
-                    .filter(parsed ->parsed[3].equals(id))
-                    .map(parsed-> parsed[2]).findAny().orElse(null);
+                    .filter(parsed -> parsed[3].equals(id))
+                    .map(parsed -> parsed[2]).findAny().orElse(null);
         } catch (IOException e) {
             throw new IllegalStateException("Проблемы с файлом");
         }
@@ -100,17 +101,23 @@ public class UsersRepositoryTextFileImpl implements UsersRepository {
         try (BufferedReader reader = new BufferedReader(new FileReader("seasonTickets.txt"))) {
             final String id = ticketID;
             List<String> list = reader.lines()
-            //ticketID = reader.lines()
                     .map(line -> line.split("\\|"))
-                    .filter(parsed ->parsed[0].equals(id))
-                    .map(parsed-> Arrays.asList(parsed))
+                    .filter(parsed -> parsed[0].equals(id))
+                    .map(Arrays::asList)
                     .findFirst().orElse(Collections.emptyList());
-                    //.map(parsed-> parsed[3]).findAny().orElse(null);
-        } catch (IOException e) {
-            throw new IllegalStateException("Проблемы с файлом");
-        }
-        return null;
+            if (!list.isEmpty()) {
+                String seasonTicketId = list.get(0);
+                LocalDate begin = LocalDate.parse(list.get(1));
+                LocalDate end = LocalDate.parse(list.get(2));
+                TypeOfTicket type = TypeOfTicket.valueOf(list.get(3));
+                return new SeasonTicket(type, begin, end, seasonTicketId);
+            }
+            } catch(IOException e){
+                throw new IllegalStateException("Проблемы с файлом");
+            }
+            return null;
 
+        }
     }
-}
+
 

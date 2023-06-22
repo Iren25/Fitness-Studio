@@ -1,4 +1,5 @@
 package de.ait.repositories;
+import de.ait.models.SeasonTicket;
 import de.ait.models.User;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -30,5 +31,10 @@ public class UsersRepositoryListImpl implements UsersRepository {
     @Override
     public void save(User user) {
 
+    }
+
+    @Override
+    public SeasonTicket getSeasonTicketByPhone(String phoneNumber) {
+        return null;
     }
 }

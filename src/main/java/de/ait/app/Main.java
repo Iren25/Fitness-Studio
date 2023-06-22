@@ -40,7 +40,8 @@ public class Main {
         String check3 = contractService.makeContract("33","23");
         System.out.println(check3);
         seasonTicketRepository.save(new SeasonTicket(TypeOfTicket.GYMANDGROUP, LocalDate.of(2023,07,01),LocalDate.of(2024,06,30),"25"));
-
+        System.out.println(usersRepository.findById("3"));
+        System.out.println(usersRepository.getSeasonTicketByPhone("+4569321456"));
     }
     }
 
