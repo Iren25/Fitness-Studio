@@ -35,6 +35,11 @@ public class Main {
       // "+4978465725328", "3"));
        // String check2 = contractService.makeContract("3", "2");
         //System.out.println(check2);
+        usersRepository.save(new User("Andrej","Semashko",LocalDate.of(1997,03,15),"+4569321456","33"));
+        System.out.println(seasonTicketRepository.findById("24"));
+        String check3 = contractService.makeContract("33","23");
+        System.out.println(check3);
+        seasonTicketRepository.save(new SeasonTicket(TypeOfTicket.GYMANDGROUP, LocalDate.of(2023,07,01),LocalDate.of(2024,06,30),"25"));
 
     }
     }
