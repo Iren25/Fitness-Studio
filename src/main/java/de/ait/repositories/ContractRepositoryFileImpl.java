@@ -1,7 +1,6 @@
 package de.ait.repositories;
 
 import de.ait.models.Contract;
-import de.ait.models.User;
 
 import java.io.*;
 import java.time.LocalDate;
@@ -68,9 +67,7 @@ public class ContractRepositoryFileImpl implements ContractRepository {
         List<Contract> contractList = new ArrayList<>();
         try (FileReader fileReader = new FileReader("contracts.txt");
              BufferedReader bufferedReader = new BufferedReader(fileReader)) {
-
             String line = bufferedReader.readLine();
-
             while (line != null) {
                 Contract contract = parseLine(line);
                 contractList.add(contract);
@@ -79,7 +76,6 @@ public class ContractRepositoryFileImpl implements ContractRepository {
         } catch (IOException e) {
             System.err.println("Произошла ошибка");
         }
-
         return contractList;
     }
     }

@@ -1,4 +1,4 @@
 Ivan|Ivanov|1990-01-15|+87326744531|1
 Petr|Petrov|1992-06-21|+49786565276|2
-
-User{firstName='Oleg', lastName='Petrov', dateOfBirth=1990-08-10, phoneNumber='+4978465725328', seasonTicket_id=2}
+Oleg|Petrov|1990-08-10|+4978465725328|3
+Anton|Sergejev|1992-05-14|+491719191205|25

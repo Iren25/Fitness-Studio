@@ -1,5 +1,6 @@
 package de.ait.repositories;
 
+
 import de.ait.models.User;
 
 import java.io.*;
@@ -20,12 +21,9 @@ public class UsersRepositoryTextFileImpl implements UsersRepository {
     @Override
     public List<User> findAll() {
         List<User> users = new ArrayList<>();
-
         try (FileReader fileReader = new FileReader(fileName);
              BufferedReader bufferedReader = new BufferedReader(fileReader)) {
-
             String line = bufferedReader.readLine();
-
             while (line != null) {
                 User user = parseLine(line);
                 users.add(user);
@@ -34,20 +32,20 @@ public class UsersRepositoryTextFileImpl implements UsersRepository {
         } catch (IOException e) {
             System.err.println("Произошла ошибка");
         }
-
         return users;
     }
     @Override
     public void save(User user) {
-        try (FileWriter fileWriter = new FileWriter("users.txt", true);
-             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter)) {
-            String line = user.toString();
-            bufferedWriter.newLine();
-            bufferedWriter.write(line);
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("users.txt", true))) {
+            writer.write(user.getFirstName() + "|" +
+                    user.getLastName() + "|" +
+                    user.getDateOfBirth().toString() + "|" +
+                    user.getPhoneNumber()+ "|" +
+                    user.getUserId());
+            writer.newLine();
         } catch (IOException e) {
-            System.err.println("Произошла ошибка записи в файл");
+            throw new IllegalStateException("Проблемы с файлом");
         }
-
     }
 
     private static User parseLine(String line) {
@@ -57,7 +55,6 @@ public class UsersRepositoryTextFileImpl implements UsersRepository {
         LocalDate dateOfBirth = LocalDate.parse(parsed[2]);
         String phoneNumber = parsed[3];
         String userId = parsed[4];
-
         return new User(
                 firstName, lastName, dateOfBirth, phoneNumber, userId);
     }
@@ -72,3 +69,4 @@ public class UsersRepositoryTextFileImpl implements UsersRepository {
         throw new IllegalArgumentException();
     }
 }
+

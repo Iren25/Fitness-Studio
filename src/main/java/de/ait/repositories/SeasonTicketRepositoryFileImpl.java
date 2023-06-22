@@ -1,13 +1,19 @@
 package de.ait.repositories;
 
+
+
 import de.ait.models.SeasonTicket;
 import de.ait.models.TypeOfTicket;
+
+
+
 import java.io.*;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.List;
 
+import java.util.List;
 
 public class SeasonTicketRepositoryFileImpl implements SeasonTicketRepository {
     private String fileName;
@@ -41,11 +47,9 @@ public class SeasonTicketRepositoryFileImpl implements SeasonTicketRepository {
     private static SeasonTicket parseLine(String line) {
         String[] parsed = line.split("\\|");
         String id = parsed[0];
-        LocalDate begin = LocalDate.parse(parsed[1], DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        LocalDate begin = LocalDate.parse(parsed[1]);
         LocalDate end = LocalDate.parse(parsed[2], DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         TypeOfTicket typeOfTicket = TypeOfTicket.valueOf(parsed[3]);
-
-
         return new SeasonTicket(typeOfTicket, begin, end, id);
     }
 
@@ -64,9 +68,7 @@ public class SeasonTicketRepositoryFileImpl implements SeasonTicketRepository {
             List<SeasonTicket> seasonTickets = new ArrayList<>();
             try (FileReader fileReader = new FileReader("seasonTickets.txt");
                  BufferedReader bufferedReader = new BufferedReader(fileReader)) {
-
                 String line = bufferedReader.readLine();
-
                 while (line != null) {
                     SeasonTicket seasonTicket = parseLine(line);
                     seasonTickets.add(seasonTicket);
@@ -75,7 +77,6 @@ public class SeasonTicketRepositoryFileImpl implements SeasonTicketRepository {
             } catch (IOException e) {
                 System.err.println("Произошла ошибка");
             }
-
             return seasonTickets;
     }
 
