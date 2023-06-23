@@ -64,7 +64,7 @@ public class User {
                 ", lastName='" + lastName + '\'' +
                 ", dateOfBirth=" + dateOfBirth +
                 ", phoneNumber='" + phoneNumber + '\'' +
-                ", seasonTicket_id=" + userId +
+                ", userId=" + userId +
                 '}';
     }
 }

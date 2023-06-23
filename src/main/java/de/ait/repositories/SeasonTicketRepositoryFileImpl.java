@@ -2,6 +2,7 @@ package de.ait.repositories;
 
 import de.ait.models.SeasonTicket;
 import de.ait.models.TypeOfTicket;
+
 import java.io.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -27,6 +28,7 @@ public class SeasonTicketRepositoryFileImpl implements SeasonTicketRepository {
 
     @Override
     public void save(SeasonTicket seasonTicket) {
+
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("seasonTickets.txt", true))) {
             writer.write(seasonTicket.getId() + "|" +
                     seasonTicket.getBegin().toString() + "|" +
@@ -35,6 +37,7 @@ public class SeasonTicketRepositoryFileImpl implements SeasonTicketRepository {
             writer.newLine();
         } catch (IOException e) {
             throw new IllegalStateException("Проблемы с файлом");
+
         }
     }
     private static SeasonTicket parseLine(String line) {
@@ -45,7 +48,6 @@ public class SeasonTicketRepositoryFileImpl implements SeasonTicketRepository {
         TypeOfTicket typeOfTicket = TypeOfTicket.valueOf(parsed[3]);
         return new SeasonTicket(typeOfTicket, begin, end, id);
     }
-
     @Override
     public SeasonTicket findById(String id) {
         for (SeasonTicket seasonTicket : findAll()) {
@@ -55,23 +57,21 @@ public class SeasonTicketRepositoryFileImpl implements SeasonTicketRepository {
         }
         throw new IllegalArgumentException();
     }
-
     @Override
     public List<SeasonTicket> findAll() {
-            List<SeasonTicket> seasonTickets = new ArrayList<>();
-            try (FileReader fileReader = new FileReader("seasonTickets.txt");
-                 BufferedReader bufferedReader = new BufferedReader(fileReader)) {
-                String line = bufferedReader.readLine();
-                while (line != null) {
-                    SeasonTicket seasonTicket = parseLine(line);
-                    seasonTickets.add(seasonTicket);
-                    line = bufferedReader.readLine();
-                }
-            } catch (IOException e) {
-                System.err.println("Произошла ошибка");
+        List<SeasonTicket> seasonTickets = new ArrayList<>();
+        try (FileReader fileReader = new FileReader("seasonTickets.txt");
+             BufferedReader bufferedReader = new BufferedReader(fileReader)) {
+            String line = bufferedReader.readLine();
+            while (line != null) {
+                SeasonTicket seasonTicket = parseLine(line);
+                seasonTickets.add(seasonTicket);
+                line = bufferedReader.readLine();
             }
-            return seasonTickets;
+            fileReader.close();
+        } catch (IOException e) {
+            System.err.println("Произошла ошибка");
+        }
+        return seasonTickets;
     }
-
-
 }
