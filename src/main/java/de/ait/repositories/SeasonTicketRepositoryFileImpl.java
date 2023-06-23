@@ -30,7 +30,7 @@ public class SeasonTicketRepositoryFileImpl implements SeasonTicketRepository {
     public void save(SeasonTicket seasonTicket) {
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("seasonTickets.txt", true))) {
-            writer.write(seasonTicket.getId() + "|" +
+            writer.write( seasonTicket.getId()+ "|" +
                     seasonTicket.getBegin().toString() + "|" +
                     seasonTicket.getEnd().toString() + "|" +
                     seasonTicket.getTypeOfTicket().toString());
@@ -46,7 +46,8 @@ public class SeasonTicketRepositoryFileImpl implements SeasonTicketRepository {
         LocalDate begin = LocalDate.parse(parsed[1]);
         LocalDate end = LocalDate.parse(parsed[2], DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         TypeOfTicket typeOfTicket = TypeOfTicket.valueOf(parsed[3]);
-        return new SeasonTicket(typeOfTicket, begin, end, id);
+
+        return new SeasonTicket(id,begin, end,typeOfTicket);
     }
     @Override
     public SeasonTicket findById(String id) {

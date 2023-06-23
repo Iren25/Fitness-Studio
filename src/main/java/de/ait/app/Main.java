@@ -5,8 +5,7 @@ import de.ait.models.SeasonTicket;
 import de.ait.models.TypeOfTicket;
 import de.ait.models.User;
 import de.ait.repositories.*;
-import de.ait.services.ContractService;
-import de.ait.services.ContractServiceImpl;
+import de.ait.services.*;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -20,7 +19,10 @@ public class
 Main {
     public static void main(String[] args) {
         UsersRepository usersRepository = new UsersRepositoryTextFileImpl("users.txt");
+        UsersService usersService = new UsersServiceImpl(usersRepository);
+
         SeasonTicketRepository seasonTicketRepository = new SeasonTicketRepositoryFileImpl("seasonTicket.txt");
+        SeasonTicketService seasonTicketService = new SeasonTicketServiceImpl(seasonTicketRepository);
         ContractRepository contractRepository = new ContractRepositoryFileImpl("contracts.txt");
         ContractService contractService = new ContractServiceImpl(usersRepository, seasonTicketRepository, contractRepository);
         /*List<User> users = new ArrayList<>();
@@ -52,7 +54,6 @@ Main {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
-            System.out.println("Операции для заключения договора: ");
             System.out.println("1. Сохранить данные клиента");
             System.out.println("2. Сохранить описание абонемента");
             System.out.println("3. Заключить договор");
@@ -82,7 +83,7 @@ Main {
                     String phoneNumber = scanner.nextLine();
                     System.out.println("Введите номер паспорта клиента: ");
                     String userId = scanner.nextLine();
-                    usersRepository.save(new User(firstName, lastName, dateOfBirth,
+                    usersService.userSave(new User(firstName, lastName, dateOfBirth,
                             phoneNumber, userId));
                     break;
                 case 2:
@@ -94,7 +95,7 @@ Main {
                     LocalDate end = LocalDate.parse(scanner.nextLine());
                     System.out.println("Введите номер абонемента: ");
                     String ticketId = scanner.nextLine();
-                    seasonTicketRepository.save(new SeasonTicket(typeOfTicket, begin, end, ticketId));
+                    seasonTicketService.save(new SeasonTicket(ticketId,begin,end,typeOfTicket ));
                     break;
                 case 3:
                     System.out.println("Введите номер паспорта клиента: ");
@@ -106,14 +107,14 @@ Main {
                     break;
                 case 4:
                     System.out.println("Список клиентов:");
-                    List<User> users = usersRepository.findAll();
+                    List<User> users = usersService.getAll();
                     for (User user : users) {
                         System.out.println(user);
                     }
                     break;
                 case 5:
                     System.out.println("Список абонементов:");
-                    List<SeasonTicket> seasonTickets = seasonTicketRepository.findAll();
+                    List<SeasonTicket> seasonTickets = seasonTicketService.getAll();
                     for (SeasonTicket seasonTicket : seasonTickets) {
                         System.out.println(seasonTicket);
                     }
@@ -128,18 +129,18 @@ Main {
                 case 7:
                     System.out.println("Введите номер паспорта клиента: ");
                     userId = scanner.nextLine();
-                    System.out.println(usersRepository.findById(userId));
+                    System.out.println(usersService.findById(userId));
                     break;
                 case 8:
                     System.out.println("Введите номер телефона клиента: ");
                     String phone = scanner.nextLine();
-                    System.out.println(usersRepository.getSeasonTicketByPhone(phone));
+                    System.out.println(usersService.getSeasonTicketByPhone(phone));
                     break;
 
                 case 9:
                     System.out.println("Введите номер абонемента: ");
                     ticketId = scanner.nextLine();
-                    System.out.println(seasonTicketRepository.findById(ticketId));
+                    System.out.println(seasonTicketService.findById(ticketId));
                     break;
                 case 10:
                     System.out.println("Введите номер договора: ");
