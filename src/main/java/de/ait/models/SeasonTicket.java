@@ -22,24 +22,12 @@ public class SeasonTicket  {
         return typeOfTicket;
     }
 
-    public void setTypeOfTicket(TypeOfTicket typeOfTicket) {
-        this.typeOfTicket = typeOfTicket;
-    }
-
     public LocalDate getBegin() {
         return begin;
     }
 
-    public void setBegin(LocalDate begin) {
-        this.begin = begin;
-    }
-
     public LocalDate getEnd() {
         return end;
-    }
-
-    public void setEnd(LocalDate end) {
-        this.end = end;
     }
 
     public String getId() {
@@ -52,11 +40,10 @@ public class SeasonTicket  {
 
     @Override
     public String toString() {
-        return "SeasonTicket{" +
-                "id='" + id + '\'' +
-                ", begin=" + begin +
-                ", end=" + end +
-                ", typeOfTicket=" + typeOfTicket +
-                '}';
+        return  "Абонемент номер  : " + id +
+                ", начало действия абонемента: " + begin +
+                ", конец действия абонемента: " + end +
+                ", название абонемента: " + typeOfTicket;
+
     }
 }

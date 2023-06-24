@@ -1,12 +1,10 @@
 package de.ait.services;
-
 import de.ait.models.Contract;
 import de.ait.models.SeasonTicket;
 import de.ait.models.User;
 import de.ait.repositories.ContractRepository;
 import de.ait.repositories.SeasonTicketRepository;
 import de.ait.repositories.UsersRepository;
-
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;

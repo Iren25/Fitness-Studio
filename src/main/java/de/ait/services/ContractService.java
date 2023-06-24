@@ -1,9 +1,5 @@
 package de.ait.services;
-
-
 import de.ait.models.Contract;
-import de.ait.models.SeasonTicket;
-
 import java.util.List;
 
 public interface ContractService {

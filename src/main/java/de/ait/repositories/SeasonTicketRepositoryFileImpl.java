@@ -1,8 +1,6 @@
 package de.ait.repositories;
-
 import de.ait.models.SeasonTicket;
 import de.ait.models.TypeOfTicket;
-
 import java.io.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -18,17 +16,11 @@ public class SeasonTicketRepositoryFileImpl implements SeasonTicketRepository {
         this.seasonTicketList = new ArrayList<>();
     }
 
-    public String getFileName() {
-        return fileName;
-    }
-
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
-
     @Override
     public void save(SeasonTicket seasonTicket) {
-
+        if(seasonTicket.getBegin().isAfter(seasonTicket.getEnd())){
+            throw new RuntimeException("Дата начала не может быть позднее даты окончания абонемента");
+        }
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("seasonTickets.txt", true))) {
             writer.write(seasonTicket.getId() + "|" +
                     seasonTicket.getBegin().toString() + "|" +

@@ -1,5 +1,4 @@
 package de.ait.services;
-
 import de.ait.models.SeasonTicket;
 import de.ait.repositories.SeasonTicketRepository;
 import java.util.List;

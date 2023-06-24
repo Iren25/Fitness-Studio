@@ -18,7 +18,8 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ContractServiceImplTest {
+class
+ContractServiceImplTest {
     private UsersRepositoryListImpl usersRepositoryList;
     private SeasonTicketRepositoryList seasonTicketRepositoryList;
     private ContractRepositoryList contractRepositoryList;

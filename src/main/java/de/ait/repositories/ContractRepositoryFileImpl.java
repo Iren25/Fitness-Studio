@@ -1,7 +1,6 @@
 package de.ait.repositories;
 
 import de.ait.models.Contract;
-
 import java.io.*;
 import java.time.LocalDate;
 import java.util.ArrayList;

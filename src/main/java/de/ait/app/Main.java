@@ -1,18 +1,14 @@
 package de.ait.app;
-
 import de.ait.models.Contract;
 import de.ait.models.SeasonTicket;
 import de.ait.models.TypeOfTicket;
 import de.ait.models.User;
 import de.ait.repositories.*;
 import de.ait.services.*;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
-import java.util.UUID;
-import java.util.logging.SocketHandler;
 
 
 public class
@@ -25,35 +21,10 @@ Main {
         SeasonTicketService seasonTicketService = new SeasonTicketServiceImpl(seasonTicketRepository);
         ContractRepository contractRepository = new ContractRepositoryFileImpl("contracts.txt");
         ContractService contractService = new ContractServiceImpl(usersRepository, seasonTicketRepository, contractRepository);
-        /*List<User> users = new ArrayList<>();
-        users.add(new User("User1", "User1",
-                LocalDate.of(1980, 1, 10), "+49175758934", "1"));
-        users.add(new User("User2", "User2",
-                LocalDate.of(1976, 4, 4), "+491757785944", "2"));
-        users.add(new User("User3", "User3",
-                LocalDate.of(1984, 8, 25), "+49151943736", "3")); */
-        //String check = contractService.makeContract("1", "1");
-        //System.out.println(check);
-        //List<SeasonTicket> seasonTicketList = seasonTicketRepository.findAll();
-        //seasonTicketList.add(new SeasonTicket(TypeOfTicket.GYM, LocalDate.of(2023, 07, 14), LocalDate.of(2024, 07, 13), "1"));
-        //List<SeasonTicket> seasonTicketList = seasonTicketRepository.findAll();
-        //System.out.println(seasonTicketList);
-        //System.out.println();
-        //usersRepository.save(new User("Oleg", "Petrov", LocalDate.of(1990, 8, 10),
-        // "+4978465725328", "3"));
-        // String check2 = contractService.makeContract("3", "2");
-        //System.out.println(check2);
-       /* usersRepository.save(new User("Andrej", "Semashko", LocalDate.of(1997, 03, 15), "+4569321456", "33"));
-        System.out.println(seasonTicketRepository.findById("24"));
-        String check3 = contractService.makeContract("33", "23");
-        System.out.println(check3);
-        seasonTicketRepository.save(new SeasonTicket(TypeOfTicket.GYMANDGROUP, LocalDate.of(2023, 07, 01), LocalDate.of(2024, 06, 30), "25"));
-        System.out.println(usersRepository.findById("3"));
-        System.out.println(usersRepository.getSeasonTicketByPhone("+4569321456"));*/
-
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
+            System.out.println("Операции для заключения договора: ");
             System.out.println("1. Сохранить данные клиента");
             System.out.println("2. Сохранить описание абонемента");
             System.out.println("3. Заключить договор");
@@ -83,7 +54,7 @@ Main {
                     String phoneNumber = scanner.nextLine();
                     System.out.println("Введите номер паспорта клиента: ");
                     String userId = scanner.nextLine();
-                    usersService.userSave(new User(firstName, lastName, dateOfBirth,
+                    usersRepository.save(new User(firstName, lastName, dateOfBirth,
                             phoneNumber, userId));
                     break;
                 case 2:
@@ -95,7 +66,7 @@ Main {
                     LocalDate end = LocalDate.parse(scanner.nextLine());
                     System.out.println("Введите номер абонемента: ");
                     String ticketId = scanner.nextLine();
-                    seasonTicketService.save(new SeasonTicket(ticketId,begin,end,typeOfTicket ));
+                    seasonTicketRepository.save(new SeasonTicket(ticketId, begin, end, typeOfTicket));
                     break;
                 case 3:
                     System.out.println("Введите номер паспорта клиента: ");
@@ -121,7 +92,7 @@ Main {
                     break;
                 case 6:
                     System.out.println("Список договоров:");
-                    List<Contract> contracts = contractRepository.findAll();
+                    List<Contract> contracts = contractService.getAll();
                     for (Contract contract1 : contracts) {
                         System.out.println(contract1);
                     }
@@ -145,7 +116,7 @@ Main {
                 case 10:
                     System.out.println("Введите номер договора: ");
                     contractId = scanner.nextLine();
-                    System.out.println(contractRepository.findById(contractId));
+                    System.out.println(contractService.findById(contractId));
                     break;
                 case 0:
                     System.out.println("Выход");

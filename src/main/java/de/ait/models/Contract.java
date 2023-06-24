@@ -30,33 +30,19 @@ public class Contract {
         return date;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
     public String getTicketId() {
         return ticketId;
-    }
-
-    public void setTicketId(String ticketId) {
-        this.ticketId = ticketId;
     }
 
     public String getUserId() {
         return userId;
     }
 
-    public void setLastName(String userId) {
-        this.userId = userId;
-    }
-
     @Override
     public String toString() {
-        return "Contract{" +
-                "id='" + id + '\'' +
-                ", date=" + date +
-                ", ticketId='" + ticketId + '\'' +
-                ", userId='" + userId + '\'' +
-                '}';
+        return "Договор номер: " +
+                id  + ", заключён: " + date +
+                ", номер абонемента: " + ticketId +
+                ", номер паспорта: " + userId;
     }
 }
