@@ -9,11 +9,9 @@ import java.util.*;
 
 public class UsersServiceImpl implements UsersService {
     private UsersRepository usersRepository;
-
     public UsersServiceImpl(UsersRepository usersRepository) {
         this.usersRepository = usersRepository;
     }
-
     @Override
     public List<User> getAll() {
         return usersRepository.findAll();
@@ -26,7 +24,6 @@ public class UsersServiceImpl implements UsersService {
     public User findById(String id) {
         return usersRepository.findById(id);
     }
-
     @Override
     public SeasonTicket getSeasonTicketByPhone(String phoneNumber) {
         return usersRepository.getSeasonTicketByPhone(phoneNumber);

@@ -30,16 +30,16 @@ public class SeasonTicketRepositoryFileImpl implements SeasonTicketRepository {
     public void save(SeasonTicket seasonTicket) {
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("seasonTickets.txt", true))) {
-            writer.write( seasonTicket.getId()+ "|" +
+            writer.write(seasonTicket.getId() + "|" +
                     seasonTicket.getBegin().toString() + "|" +
                     seasonTicket.getEnd().toString() + "|" +
                     seasonTicket.getTypeOfTicket().toString());
             writer.newLine();
         } catch (IOException e) {
             throw new IllegalStateException("Проблемы с файлом");
-
         }
     }
+
     private static SeasonTicket parseLine(String line) {
         String[] parsed = line.split("\\|");
         String id = parsed[0];
@@ -47,8 +47,9 @@ public class SeasonTicketRepositoryFileImpl implements SeasonTicketRepository {
         LocalDate end = LocalDate.parse(parsed[2], DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         TypeOfTicket typeOfTicket = TypeOfTicket.valueOf(parsed[3]);
 
-        return new SeasonTicket(id,begin, end,typeOfTicket);
+        return new SeasonTicket(id, begin, end, typeOfTicket);
     }
+
     @Override
     public SeasonTicket findById(String id) {
         for (SeasonTicket seasonTicket : findAll()) {
@@ -58,6 +59,7 @@ public class SeasonTicketRepositoryFileImpl implements SeasonTicketRepository {
         }
         throw new IllegalArgumentException();
     }
+
     @Override
     public List<SeasonTicket> findAll() {
         List<SeasonTicket> seasonTickets = new ArrayList<>();

@@ -6,7 +6,6 @@ import java.util.List;
 public interface UsersService {
 
      List<User> getAll();
-
      void userSave(User user);
      User findById(String id);
      SeasonTicket getSeasonTicketByPhone(String phoneNumber);

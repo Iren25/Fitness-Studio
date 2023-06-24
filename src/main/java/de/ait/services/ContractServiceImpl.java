@@ -12,10 +12,9 @@ import java.util.List;
 import java.util.UUID;
 
 public class ContractServiceImpl implements ContractService {
-    private  UsersRepository usersRepository;
-    private  SeasonTicketRepository seasonTicketRepository;
-    private  ContractRepository contractRepository;
-
+    private UsersRepository usersRepository;
+    private SeasonTicketRepository seasonTicketRepository;
+    private ContractRepository contractRepository;
 
     public ContractServiceImpl(UsersRepository usersRepository, SeasonTicketRepository seasonTicketRepository, ContractRepository contractRepository) {
         this.usersRepository = usersRepository;
@@ -39,17 +38,17 @@ public class ContractServiceImpl implements ContractService {
     }
 
     @Override
-    public  String makeContract(String userId, String id) {
+    public String makeContract(String userId, String id) {
         User user = usersRepository.findById(userId);
-        if (user == null){
+        if (user == null) {
             throw new IllegalArgumentException("Пользователь не найден");
         }
         SeasonTicket seasonTicket = seasonTicketRepository.findById(id);
-        if (seasonTicket == null){
+        if (seasonTicket == null) {
             throw new IllegalArgumentException("Абонемент не найден");
         }
         Contract contract = new Contract(UUID.randomUUID().toString(), LocalDate.now(),
-                seasonTicket.getId(),user.getUserId());
+                seasonTicket.getId(), user.getUserId());
         contractRepository.save(contract);
         return "Договор № " + contract.getId() + " был заключен с " + user.getFirstName()
                 + " " + user.getLastName() + " " + contract.getDate();

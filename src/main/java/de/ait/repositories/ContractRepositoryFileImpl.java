@@ -43,6 +43,7 @@ public class ContractRepositoryFileImpl implements ContractRepository {
             throw new IllegalStateException("Проблемы с файлом");
         }
     }
+
     private static Contract parseLine(String line) {
         String[] parsed = line.split("\\|");
         String id = parsed[0];
@@ -50,8 +51,9 @@ public class ContractRepositoryFileImpl implements ContractRepository {
         String ticketId = parsed[2];
         String userId = parsed[3];
 
-        return new Contract(id,date,ticketId,userId);
+        return new Contract(id, date, ticketId, userId);
     }
+
     @Override
     public Contract findById(String id) {
         for (Contract contract : findAll()) {
@@ -63,7 +65,7 @@ public class ContractRepositoryFileImpl implements ContractRepository {
     }
 
     @Override
-    public List <Contract> findAll() {
+    public List<Contract> findAll() {
         List<Contract> contractList = new ArrayList<>();
         try (FileReader fileReader = new FileReader("contracts.txt");
              BufferedReader bufferedReader = new BufferedReader(fileReader)) {
@@ -78,6 +80,6 @@ public class ContractRepositoryFileImpl implements ContractRepository {
         }
         return contractList;
     }
-    }
+}
 
 

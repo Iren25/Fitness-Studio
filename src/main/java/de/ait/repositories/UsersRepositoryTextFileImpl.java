@@ -111,14 +111,14 @@ public class UsersRepositoryTextFileImpl implements UsersRepository {
                 LocalDate end = LocalDate.parse(list.get(2));
                 TypeOfTicket type = TypeOfTicket.valueOf(list.get(3));
 
-                return new SeasonTicket(seasonTicketId, begin, end,type);
+                return new SeasonTicket(seasonTicketId, begin, end, type);
             }
-            } catch(IOException e){
-                throw new IllegalStateException("Проблемы с файлом");
-            }
-            return null;
-
+        } catch (IOException e) {
+            throw new IllegalStateException("Проблемы с файлом");
         }
+        return null;
+
     }
+}
 
 

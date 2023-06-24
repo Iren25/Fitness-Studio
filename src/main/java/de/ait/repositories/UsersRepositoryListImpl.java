@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UsersRepositoryListImpl implements UsersRepository {
+    List<User> users = new ArrayList<>();
     @Override
     public List<User> findAll() {
         User user = new User("User1", "User1",
@@ -14,23 +15,24 @@ public class UsersRepositoryListImpl implements UsersRepository {
                 LocalDate.of(1976, 4, 4), "+491757785944", "2");
         User user2 = new User("User3", "User3",
                 LocalDate.of(1984, 8, 25), "+49151i943736", "3");
-
-        List<User> users = new ArrayList<>();
         users.add(user);
         users.add(user1);
         users.add(user2);
 
         return users;
     }
-
     @Override
     public User findById(String id) {
-        return null;
+         id = "1";
+        for (User user : findAll()) {
+            if(id.equals(user.getUserId())) {
+                return user;
+            }
+        }
+        throw new IllegalArgumentException();
     }
-
     @Override
     public void save(User user) {
-
     }
 
     @Override
@@ -38,3 +40,5 @@ public class UsersRepositoryListImpl implements UsersRepository {
         return null;
     }
 }
+
+
